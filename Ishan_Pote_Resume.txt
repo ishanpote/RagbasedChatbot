@@ -1,0 +1,47 @@
+
+Name: Ishan Pote
+Email: ishan.pote@example.com
+Phone: +91-9876543210
+LinkedIn: linkedin.com/in/ishanpote
+GitHub: github.com/ishanpote
+
+Objective
+Aspiring Data Scientist with strong foundation in AI/ML, currently pursuing B.Tech in Data Science. Passionate about solving real-world problems through data-driven approaches. Seeking opportunities to leverage my skills in machine learning, data analysis, and software development.
+
+Education
+B.Tech in Data Science
+St. Vincent Pallotti College of Engineering and Technology
+2021 – Present
+
+Technical Skills
+- Languages: Python, SQL, C++, HTML/CSS
+- Frameworks/Libraries: Pandas, NumPy, Scikit-learn, TensorFlow, Keras
+- Tools: Power BI, Git, Jupyter, VS Code
+- Databases: MySQL, Firebase
+- Others: Data Visualization, ML Model Deployment
+
+Projects
+1. AI-Powered Herbal Knowledge System
+Built a plant identification system using MobileNetV2 and integrated traditional medicinal data for contextual insight.
+
+2. Queue Management System using Raspberry Pi
+Used PiCamera2 and IMX500 sensor to manage queues via object detection and real-time tracking.
+
+3. Secure Payment Authentication System
+Designed a multi-factor authentication model using behavioral biometrics and secure device-based keys.
+
+Hackathon & Achievements
+- Winner at OpenHack24, IISc Bangalore
+- Participant in Convolve 3.0 (Pan-IIT Hackathon)
+- Finalist at Kharagpur Data Science Hackathon
+- Participated in CodeHunt and won Valorant Gaming Event
+
+Certifications
+- 21-Day Masterclass in Power BI – Pantech E-Learning
+- Data Analysis with R Programming – Dec 2024
+- AI on Vertex AI – Google Cloud
+
+Extracurricular
+- Member of College Coding Club
+- Volunteer at TechFest Events
+- Regular contributor to open-source ML repositories

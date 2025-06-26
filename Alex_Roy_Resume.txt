@@ -1,0 +1,57 @@
+ALEX ROY
+Email: alexroy.ds@gmail.com | Phone: +91-9988776655 | Location: Bengaluru, Karnataka
+LinkedIn: linkedin.com/in/alexroy | GitHub: github.com/alexroy-ai
+
+CAREER OBJECTIVE
+Data Science enthusiast with strong problem-solving skills and hands-on experience in developing predictive models, data pipelines, and visual analytics. Seeking a challenging role in a data-driven organization to utilize analytical and programming skills for impactful business solutions.
+
+EDUCATION
+Bachelor of Technology (B.Tech) in Computer Science
+RV College of Engineering, Bengaluru  
+Graduation: July 2023 | CGPA: 8.74/10
+
+TECHNICAL SKILLS
+Programming: Python, R, SQL, Java
+Tools & Libraries: Pandas, NumPy, Scikit-learn, TensorFlow, Keras, Power BI, Tableau
+Database: MySQL, MongoDB
+Others: Git, Linux, Excel, Jupyter, Google Colab
+
+PROJECTS
+1. **Customer Churn Prediction System**  
+   - Built a machine learning model using logistic regression and random forest to predict customer churn for a telecom company.
+   - Achieved 88% accuracy and deployed the model via a Flask API.
+
+2. **Stock Market Trend Analyzer**  
+   - Developed a web app using Streamlit and Python that visualizes stock trends and forecasts future prices using LSTM models.
+   - Integrated Alpha Vantage API for real-time data.
+
+3. **E-commerce Dashboard with Power BI**
+   - Designed an interactive dashboard visualizing sales, customer behavior, and product trends from large datasets.
+   - Enabled business users to derive actionable insights from monthly KPIs.
+
+INTERNSHIPS
+Data Science Intern – Cognify Tech Solutions, Bengaluru  
+Jan 2023 – April 2023
+- Cleaned and processed large-scale e-commerce data using Pandas.
+- Built classification models to segment users based on purchase behavior.
+
+CERTIFICATIONS
+- IBM Data Science Professional Certificate (Coursera)
+- SQL for Data Analysis (Udemy)
+- Tableau Desktop Specialist (Tableau Academy)
+
+ACHIEVEMENTS
+- Finalist – National DataHack Championship 2023
+- Paper Presentation Winner – IEEE Student Conference on Data Intelligence
+
+EXTRACURRICULAR
+- Active member, Coding Ninjas Campus Chapter
+- Volunteer, Teach for India – STEM education drive for underprivileged students
+
+LANGUAGES
+English – Fluent
+Kannada – Native
+Hindi – Professional proficiency
+
+REFERENCES
+Available upon request

@@ -1,0 +1,52 @@
+John Doe
+📞 +91-9876543210
+📧 john.doe@email.com
+🌐 linkedin.com/in/johndoe | github.com/johndoe
+📍 Bangalore, India
+
+Objective
+Aspiring software engineer with a strong foundation in computer science and hands-on experience in developing scalable web applications. Seeking a challenging role to apply AI/ML and full-stack development skills.
+
+Education
+Bachelor of Technology in Computer Science
+National Institute of Technology, Karnataka
+2019 – 2023 | CGPA: 8.75/10
+
+Technical Skills
+- Languages: Python, JavaScript, C++, SQL
+- Web: React, Node.js, Express, HTML, CSS, Tailwind
+- Databases: MySQL, MongoDB
+- ML/DL: scikit-learn, TensorFlow, Pandas, NumPy
+- Tools: Git, Docker, VS Code, Jupyter Notebook
+
+Projects
+1. AI-Powered Resume Analyzer
+- Built a chatbot-integrated system that parses resumes and extracts key sections using NLP (Spacy, Transformers).
+- Implemented keyword matching and feedback mechanism for job alignment.
+
+2. Smart Parking System using Raspberry Pi
+- Developed an IoT-based parking tracker using sensors and real-time database integration with Firebase.
+- Reduced parking management errors by 80% in testing scenarios.
+
+3. Movie Recommendation Engine
+- Implemented collaborative filtering and content-based filtering using cosine similarity.
+- Built an interactive Flask web app with user rating features.
+
+Internships
+Machine Learning Intern – TCS iON
+Jan 2023 – Apr 2023
+- Worked on classification of customer feedback using BERT and ensemble techniques.
+- Improved accuracy by 9% through feature engineering and hyperparameter tuning.
+
+Certifications
+- Deep Learning Specialization – Coursera (Andrew Ng)
+- Google Cloud ML Engineer – Qwiklabs
+
+Achievements
+- Finalist at Smart India Hackathon 2022
+- 1st Place – Hackoverflow 4.0, NIT Nagpur
+- Top 5% on LeetCode with 500+ problems solved
+
+Extra-Curricular
+- Technical Head – Coding Club, NITK
+- Volunteer – Teach For India Coding Bootcamp

@@ -1,0 +1,42 @@
+
+SHRUTI NAIR
+Aspiring AI/ML Developer | B.Tech in Data Science (2022–2026)
+Nagpur, Maharashtra, India | shruti@example.com | +91-XXXXXXXXXX | LinkedIn: linkedin.com/in/shruti-nair | GitHub: github.com/shrutinair
+
+Career Objective
+Dedicated and solution-focused B.Tech Data Science student passionate about artificial intelligence, machine learning, and data-driven problem-solving. Adept at building, optimizing, and deploying ML/DL models with a strong foundation in Python and a growing command over full-stack development. Seeking opportunities to apply practical skills in real-world projects and innovate in the AI/ML space.
+
+Education
+St. Vincent Pallotti College of Engineering and Technology, Nagpur
+B.Tech in Data Science | 2022–2026
+- Current Semester: 4th
+- Key Courses: Data Structures & Algorithms, Operating Systems, DBMS, AI & ML, Big Data Analytics
+
+Decent Junior College, Nagpur
+Higher Secondary Education (11th–12th Science) | Completed in 2022
+
+Mount Carmel Girls' School, Nagpur
+Schooling (CBSE)
+
+Technical Skills:Languages & Libraries: Python, SQL, HTML/CSS, JavaScript,AI/ML Tools: Scikit-learn, TensorFlow, Keras, Pandas, NumPy, Matplotlib, Seaborn,Frameworks: Flask,Database: MySQL,Other Tools: Git, PowerShell, VS Code, Jupyter Notebook,
+Soft Skills: Communication, Teamwork, Anchoring, Adaptability
+
+Projects:
+    1. Flight Delay Prediction (ML Project)
+    - Analyzed historical flight data to identify delay factors and predict delays using classification models.
+    - Tools: Pandas, Matplotlib, Scikit-learn
+    - Focus: Data Cleaning, Imputation, EDA, Model Building
+
+    2. Pharmacy Management System (DBMS Project + Web App)
+    - Designed ER diagram and created MySQL database with sample data.
+    - Built a Flask-based CRUD web app for managing medicines, customers, orders, and prescriptions.
+
+    3. Tuition Academy Management System (Mini Project)
+    - Developed a full-stack app with login system, student info, and fee tracking.
+    - Focus: Flask, SQL integration, Web Design
+
+Certifications & Achievements:Certified in Web Craft Workshop,Anchored Musical Competition – College Fest 2025,Completed several coding-based academic projects with strong faculty feedback
+
+Academic Highlights:Familiar with concepts like Recursion, Greedy Algorithms, Trees, Graphs, Dynamic Programming, and NP-completeness, Studied OS topics: Scheduling, Synchronization, Deadlocks, Memory Management,Learned Object-Oriented Programming principles.
+
+Languages:English (Fluent), Hindi (Fluent), Marathi (Fluent), Japanese (Basic phrases – in progress).
