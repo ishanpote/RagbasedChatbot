@@ -1,6 +1,11 @@
 FastAPI
 ollama
+requests
 numpy
 pydantic
 uvicorn
 scikit-learn
+python-multipart
+faiss-cpu
+sentence-transformers
+transformers

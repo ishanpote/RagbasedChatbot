@@ -1,0 +1,9 @@
+{
+  "buildCommand": "cd frontend && npm install && npm run build",
+  "outputDirectory": "frontend/dist",
+  "env": {
+    "VITE_API_BASE_URL": {
+      "description": "Backend API URL (e.g., https://chatbot-backend-xxx.onrender.com/api/v1)"
+    }
+  }
+}

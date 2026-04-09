@@ -1,61 +1,91 @@
 # Chatbot Application
 
-This project is a chatbot application built using FastAPI, Ollama, and word embedding techniques. The chatbot is designed to provide answers based on the context of the documents provided. If a question is asked outside of the context, the chatbot will return an error message.
+This project is a full-stack resume chatbot built with FastAPI, React (Vite), and FAISS-based retrieval.
 
-## Project Structure
+## Local Development
 
-```
-chatbot-app
-├── controllers
-│   ├── ask_ollama.py      # Logic for interacting with the Ollama model
-│   └── embedding.py        # Handles word embedding functionality
-├── models
-│   └── chat.py            # Defines data models for chat interactions
-├── routes
-│   ├── chat.py            # Routes for chat functionality
-│   └── ingest.py          # Routes for ingesting documents
-├── main.py                # Entry point for the FastAPI application
-├── requirements.txt        # Lists project dependencies
-└── README.md              # Documentation for the project
+### Backend
+
+1. Install Python dependencies:
+
+```bash
+pip install -r requirements.txt
 ```
 
-## Setup Instructions
+2. Start the API:
 
-1. **Clone the repository:**
-   ```
-   git clone https://github.com/ishanpote/RagbasedChatbot.git
-   cd chatbot-app
-   ```
+```bash
+uvicorn main:app --reload
+```
 
-2. **Install dependencies:**
-   Make sure you have Python installed. Then, create a virtual environment and install the required packages:
-   ```
-   python -m venv venv
-   source venv/bin/activate  # On Windows use `venv\Scripts\activate`
-   pip install -r requirements.txt
-   ```
+Backend docs: `http://127.0.0.1:8000/docs`
 
-3. **Run the application:**
-   Start the FastAPI server by running:
-   ```
-   uvicorn main:app --reload
-   ```
+### Frontend
 
-4. **Access the API:**
-   Open your browser and go to `http://127.0.0.1:8000/docs` to view the API documentation and interact with the chatbot.
+1. Install frontend dependencies:
 
-## Usage
+```bash
+cd frontend
+npm install
+```
 
-- **Chat Functionality:**
-  Send messages to the chatbot through the `/chat` endpoint. The chatbot will respond based on the context of the documents ingested.
+2. Start Vite dev server:
 
-- **Ingest Documents:**
-  Use the `/ingest` endpoint to upload documents that the chatbot can use for context. 
+```bash
+npm run dev
+```
 
-## Error Handling
+Frontend: `http://localhost:5173`
 
-If a question is asked that is outside the context of the ingested documents, the chatbot will return an error message indicating that the question is out of context.
+## Free Deployment (Recommended)
 
-## License
+This project now supports a free LLM option through Hugging Face Inference API so you can deploy without running Ollama.
 
-This project is licensed under the MIT License.
+### 1) Create a free Hugging Face token
+
+- Sign in at Hugging Face
+- Create an access token
+- Keep it for deployment environment variable `HF_API_TOKEN`
+
+### 2) Deploy backend (free tier)
+
+Use a free backend host like Render/Railway and set environment variables:
+
+- `LLM_PROVIDER=huggingface`
+- `HF_API_TOKEN=<your_token>`
+- `HF_MODEL=google/flan-t5-base`
+
+### 3) Deploy frontend (free tier)
+
+Deploy `frontend` on Vercel/Netlify and set:
+
+- `VITE_API_BASE_URL=https://<your-backend-domain>/api/v1`
+
+### 4) Upload resume and chat
+
+After deploy:
+
+- Upload `.txt` resume from UI
+- Connect using the same vector database name
+- Start querying
+
+## Docker Deployment
+
+You can still run full stack in containers:
+
+```bash
+docker compose up -d --build
+```
+
+By default `docker-compose.yml` uses Hugging Face provider. To use Ollama instead:
+
+- `LLM_PROVIDER=ollama`
+- `OLLAMA_HOST=<your_ollama_host:11434>`
+
+## Deployment Artifacts
+
+- `Dockerfile` (FastAPI backend)
+- `frontend/Dockerfile` (React build + Nginx)
+- `frontend/nginx.conf` (SPA routing + API proxy)
+- `docker-compose.yml` (multi-service orchestration)
+- `.dockerignore`

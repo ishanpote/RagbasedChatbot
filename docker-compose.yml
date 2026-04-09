@@ -1,0 +1,33 @@
+version: "3.9"
+
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: chatbot-backend
+    environment:
+      # Free deployment default: use Hugging Face Inference API (set HF_API_TOKEN in your environment).
+      LLM_PROVIDER: ${LLM_PROVIDER:-huggingface}
+      HF_API_TOKEN: ${HF_API_TOKEN:-}
+      HF_MODEL: ${HF_MODEL:-google/flan-t5-base}
+      # Optional Ollama fallback (used only when LLM_PROVIDER=ollama).
+      OLLAMA_HOST: ${OLLAMA_HOST:-host.docker.internal:11434}
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    volumes:
+      - ./faiss_indexes:/app/faiss_indexes
+    ports:
+      - "8000:8000"
+    restart: unless-stopped
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: chatbot-frontend
+    depends_on:
+      - backend
+    ports:
+      - "5173:80"
+    restart: unless-stopped
