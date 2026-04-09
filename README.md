@@ -23,7 +23,7 @@ chatbot-app
 
 1. **Clone the repository:**
    ```
-   git clone <repository-url>
+   git clone https://github.com/ishanpote/RagbasedChatbot.git
    cd chatbot-app
    ```
 
