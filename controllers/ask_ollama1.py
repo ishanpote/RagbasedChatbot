@@ -1,6 +1,26 @@
 from fastapi import HTTPException
+import os
 import ollama
+from urllib.parse import urlparse
 from controllers.embedding1 import get_context_for_query  # Your context retriever
+
+
+def _resolve_ollama_host() -> str:
+    raw_host = os.getenv("OLLAMA_HOST", "").strip()
+    if not raw_host:
+        return "http://127.0.0.1:11434"
+
+    if not raw_host.startswith("http://") and not raw_host.startswith("https://"):
+        raw_host = f"http://{raw_host}"
+
+    parsed = urlparse(raw_host)
+    host = parsed.hostname or "127.0.0.1"
+    if host == "0.0.0.0":
+        host = "127.0.0.1"
+
+    scheme = parsed.scheme or "http"
+    port = parsed.port or 11434
+    return f"{scheme}://{host}:{port}"
 
 async def chat_ollama(message: str, vector_name: str) -> str:
     if not message:
@@ -36,7 +56,8 @@ async def chat_ollama(message: str, vector_name: str) -> str:
     }
     
     try:
-        response = ollama.chat(**payload)
+        client = ollama.Client(host=_resolve_ollama_host())
+        response = client.chat(**payload)
         print("==== RESPONSE FROM LLAMA ====")
         print(response['message']['content'])
         return response['message']['content']

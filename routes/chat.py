@@ -11,6 +11,8 @@ async def chat(request: ChatRequest, vector_name: str):
     try:
         response = await chat_ollama(request.query, vector_name)
         return ChatResponse(response=response)
+    except HTTPException as e:
+        raise e
     except FileNotFoundError:
         raise HTTPException(status_code=404, detail="FAISS index not found")
     except Exception as e:

@@ -34,6 +34,16 @@ export const useChat = () => {
         body: JSON.stringify({ query: 'test connection' }),
       });
 
+      let errorDetail = '';
+      if (!response.ok) {
+        try {
+          const errorData = await response.json();
+          errorDetail = errorData?.detail || '';
+        } catch {
+          errorDetail = '';
+        }
+      }
+
       if (response.ok) {
         setChatState(prev => ({
           ...prev,
@@ -44,10 +54,10 @@ export const useChat = () => {
       } else if (response.status === 404) {
         setUploadState(prev => ({
           ...prev,
-          error: 'Vector database not found. Please check the name or upload a new resume.',
+          error: errorDetail || 'Vector database not found. Please check the name or upload a new resume.',
         }));
       } else {
-        throw new Error(`Connection failed: ${response.statusText}`);
+        throw new Error(errorDetail || `Connection failed: ${response.statusText}`);
       }
     } catch (error) {
       setUploadState(prev => ({
@@ -144,7 +154,14 @@ export const useChat = () => {
       });
 
       if (!response.ok) {
-        throw new Error(`Chat request failed: ${response.statusText}`);
+        let errorDetail = '';
+        try {
+          const errorData = await response.json();
+          errorDetail = errorData?.detail || '';
+        } catch {
+          errorDetail = '';
+        }
+        throw new Error(errorDetail || `Chat request failed: ${response.statusText}`);
       }
 
       const data = await response.json();
@@ -166,7 +183,9 @@ export const useChat = () => {
     } catch (error) {
       const errorMessage: Message = {
         id: (Date.now() + 1).toString(),
-        content: 'I apologize, but I encountered an error processing your request. Please try again.',
+        content: error instanceof Error
+          ? `I encountered an error: ${error.message}`
+          : 'I apologize, but I encountered an error processing your request. Please try again.',
         isUser: false,
         timestamp: new Date(),
       };
