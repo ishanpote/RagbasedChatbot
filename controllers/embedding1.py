@@ -3,6 +3,7 @@ import pickle
 import faiss
 import numpy as np
 from sentence_transformers import SentenceTransformer
+from typing import Optional
 
 # Load model once
 # model = SentenceTransformer("all-MiniLM-L6-v2")
@@ -25,10 +26,27 @@ class FaissEmbeddingModel:
         D, I = self.index.search(np.array(query_embedding, dtype=np.float32), top_k)
         return [(self.documents[int(i)], float(D[0][idx])) for idx, i in enumerate(I[0])]
 
-embedding_model = FaissEmbeddingModel()
+_embedding_model: Optional[FaissEmbeddingModel] = None
+_tokenizer = None
+
+
+def get_embedding_model() -> FaissEmbeddingModel:
+    global _embedding_model
+    if _embedding_model is None:
+        _embedding_model = FaissEmbeddingModel()
+    return _embedding_model
+
+
+def get_tokenizer():
+    global _tokenizer
+    if _tokenizer is None:
+        from transformers import AutoTokenizer
+        _tokenizer = AutoTokenizer.from_pretrained('sentence-transformers/all-MiniLM-L6-v2')
+    return _tokenizer
 
 def embed_texts(texts):
-    embeddings = embedding_model.model.encode(texts, convert_to_numpy=True, normalize_embeddings=True)
+    model = get_embedding_model()
+    embeddings = model.model.encode(texts, convert_to_numpy=True, normalize_embeddings=True)
     return embeddings.astype("float32")
 
 def save_faiss_index(index, path):
@@ -58,25 +76,29 @@ def process_document_embedding(file_bytes: bytes, filename: str):
         pickle.dump(texts, f)
 
     return {"vectors_added": len(texts), "folder": folder}
-    
-from transformers import AutoTokenizer
-
-tokenizer = AutoTokenizer.from_pretrained('sentence-transformers/all-MiniLM-L6-v2')
 
 def chunk_document(text, max_tokens=384):
     words = text.split()
     chunks = []
     current_chunk = []
     current_len = 0
+
+    # Prefer model tokenizer for better chunk lengths; fallback to word-count chunks if unavailable.
+    tokenizer = None
+    try:
+        tokenizer = get_tokenizer()
+    except Exception:
+        tokenizer = None
+
     for word in words:
-        word_tokens = tokenizer.encode(word, add_special_tokens=False)
-        if current_len + len(word_tokens) > max_tokens:
+        word_tokens_len = len(tokenizer.encode(word, add_special_tokens=False)) if tokenizer else 1
+        if current_len + word_tokens_len > max_tokens:
             chunks.append(" ".join(current_chunk))
             current_chunk = [word]
-            current_len = len(word_tokens)
+            current_len = word_tokens_len
         else:
             current_chunk.append(word)
-            current_len += len(word_tokens)
+            current_len += word_tokens_len
     if current_chunk:
         chunks.append(" ".join(current_chunk))
     return chunks
@@ -84,26 +106,28 @@ def chunk_document(text, max_tokens=384):
 
 def load_faiss_index(vector_name):
     import os, pickle
+    model = get_embedding_model()
     index_path = os.path.join("faiss_indexes", vector_name, "faiss_index.bin")
     docs_path = os.path.join("faiss_indexes", vector_name, "documents.pkl")
-    embedding_model.index = faiss.read_index(index_path)
+    model.index = faiss.read_index(index_path)
     if os.path.exists(docs_path):
         with open(docs_path, "rb") as f:
-            embedding_model.documents = pickle.load(f)
+            model.documents = pickle.load(f)
     else:
-        embedding_model.documents = []
-    ntotal = embedding_model.index.ntotal
-    if len(embedding_model.documents) != ntotal:
+        model.documents = []
+    ntotal = model.index.ntotal
+    if len(model.documents) != ntotal:
         raise RuntimeError(
-            f"Document count ({len(embedding_model.documents)}) does not match FAISS index vectors ({ntotal}). "
+            f"Document count ({len(model.documents)}) does not match FAISS index vectors ({ntotal}). "
             "Please re-embed this document."
         )
     
 def get_context_for_query(query, vector_name, top_k=4):
     load_faiss_index(vector_name)
     print(f"Searching for query: {query} in vector: {vector_name}")
+    model = get_embedding_model()
 
-    if not embedding_model.documents:
+    if not model.documents:
         return "No documents found."
-    results = embedding_model.search(query, top_k=top_k)
+    results = model.search(query, top_k=top_k)
     return "\n".join([doc for doc, _ in results])
