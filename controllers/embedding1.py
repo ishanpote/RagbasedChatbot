@@ -106,9 +106,13 @@ def chunk_document(text, max_tokens=384):
 
 def load_faiss_index(vector_name):
     import os, pickle
-    model = get_embedding_model()
     index_path = os.path.join("faiss_indexes", vector_name, "faiss_index.bin")
     docs_path = os.path.join("faiss_indexes", vector_name, "documents.pkl")
+
+    if not os.path.exists(index_path):
+        raise FileNotFoundError(f"Index file not found: {index_path}")
+
+    model = get_embedding_model()
     model.index = faiss.read_index(index_path)
     if os.path.exists(docs_path):
         with open(docs_path, "rb") as f:
