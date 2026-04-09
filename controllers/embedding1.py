@@ -2,7 +2,6 @@ import os
 import pickle
 import faiss
 import numpy as np
-from sentence_transformers import SentenceTransformer
 from typing import Optional
 
 # Load model once
@@ -10,6 +9,7 @@ from typing import Optional
 # embedding_model = SentenceTransformer("all-MiniLM-L6-v2")  # Reinitialize model
 class FaissEmbeddingModel:
     def __init__(self, embedding_dim=384):
+        from sentence_transformers import SentenceTransformer
         self.model = SentenceTransformer('all-MiniLM-L6-v2')
         self.embedding_dim = embedding_dim
         self.index = faiss.IndexFlatL2(self.embedding_dim)
