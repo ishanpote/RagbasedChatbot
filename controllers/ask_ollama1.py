@@ -69,11 +69,12 @@ def _chat_with_huggingface(system_prompt: str, message: str) -> str:
         )
 
     model = os.getenv("HF_MODEL", "google/flan-t5-base").strip()
+    fallback_model = os.getenv("HF_FALLBACK_MODEL", "openai/gpt-oss-120b:fastest").strip()
     hf_base_url = os.getenv("HF_API_BASE", "https://router.huggingface.co/hf-inference").strip().rstrip("/")
-    endpoint = f"{hf_base_url}/models/{model}"
 
     prompt = f"{system_prompt}\n\nUser question: {message}\nAssistant answer:"
-    payload = {
+    inference_endpoint = f"{hf_base_url}/models/{model}"
+    inference_payload = {
         "inputs": prompt,
         "parameters": {
             "max_new_tokens": 220,
@@ -82,20 +83,59 @@ def _chat_with_huggingface(system_prompt: str, message: str) -> str:
         },
     }
 
-    try:
-        response = requests.post(
-            endpoint,
-            headers={"Authorization": f"Bearer {token}"},
-            json=payload,
-            timeout=90,
-        )
-    except requests.RequestException as e:
-        raise HTTPException(status_code=502, detail=f"Hugging Face API request failed: {str(e)}")
+    def _post_json(endpoint: str, payload: dict) -> requests.Response:
+        try:
+            return requests.post(
+                endpoint,
+                headers={"Authorization": f"Bearer {token}"},
+                json=payload,
+                timeout=90,
+            )
+        except requests.RequestException as e:
+            raise HTTPException(status_code=502, detail=f"Hugging Face API request failed: {str(e)}")
+
+    response = _post_json(inference_endpoint, inference_payload)
+
+    # Some models now resolve through chat-completions on the router API.
+    if response.status_code in (404, 410):
+        chat_endpoint = "https://router.huggingface.co/v1/chat/completions"
+        chat_payload = {
+            "model": fallback_model,
+            "messages": [
+                {"role": "system", "content": system_prompt},
+                {"role": "user", "content": message},
+            ],
+            "max_tokens": 220,
+            "temperature": 0.2,
+            "stream": False,
+        }
+        response = _post_json(chat_endpoint, chat_payload)
+
+        if response.status_code >= 400:
+            raise HTTPException(
+                status_code=502,
+                detail=(
+                    f"Hugging Face API error {response.status_code}: {response.text}. "
+                    f"Set HF_MODEL to a supported model, or set HF_FALLBACK_MODEL explicitly."
+                ),
+            )
+
+        data = response.json()
+        choices = data.get("choices", []) if isinstance(data, dict) else []
+        if choices and isinstance(choices[0], dict):
+            message_obj = choices[0].get("message", {})
+            content = message_obj.get("content", "").strip() if isinstance(message_obj, dict) else ""
+            if content:
+                return content
+        raise HTTPException(status_code=502, detail="Unexpected Hugging Face chat-completions response format")
 
     if response.status_code >= 400:
         raise HTTPException(
             status_code=502,
-            detail=f"Hugging Face API error {response.status_code}: {response.text}",
+            detail=(
+                f"Hugging Face API error {response.status_code}: {response.text}. "
+                f"If you see 404, try a different HF_MODEL."
+            ),
         )
 
     data = response.json()

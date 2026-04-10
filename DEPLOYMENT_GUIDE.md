@@ -42,6 +42,7 @@ Click "Advanced" > "Add Environment Variable":
 2. Key: `HF_API_TOKEN` → Value: `<paste your token from Step 1>`
 3. Key: `HF_MODEL` → Value: `google/flan-t5-base`
 4. (Optional) Key: `HF_API_BASE` → Value: `https://router.huggingface.co/hf-inference`
+5. (Optional) Key: `HF_FALLBACK_MODEL` → Value: `openai/gpt-oss-120b:fastest`
 
 ### 2.4) Deploy
 
@@ -103,6 +104,7 @@ Once done, Vercel will show your frontend URL like: `https://chatbot-app-xxx.ver
 - Check Render logs: Dashboard > Your Service > Logs
 - Common issue: `HF_API_TOKEN` is wrong or expired
 - Create a new token and update Render environment variable
+- If error says `Hugging Face API error 404`, your `HF_MODEL` may not be available on router. Set `HF_FALLBACK_MODEL=openai/gpt-oss-120b:fastest`.
 
 ### Upload says "Vector database not found"
 

@@ -55,6 +55,7 @@ Use a free backend host like Render/Railway and set environment variables:
 - `HF_API_TOKEN=<your_token>`
 - `HF_MODEL=google/flan-t5-base`
 - `HF_API_BASE=https://router.huggingface.co/hf-inference` (optional)
+- `HF_FALLBACK_MODEL=openai/gpt-oss-120b:fastest` (optional, used when HF_MODEL returns 404)
 
 ### 3) Deploy frontend (free tier)
 
