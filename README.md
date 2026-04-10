@@ -39,37 +39,52 @@ Frontend: `http://localhost:5173`
 
 ## Free Deployment (Recommended)
 
-This project now supports a free LLM option through Hugging Face Inference API so you can deploy without running Ollama.
+This project supports a free LLM option via Hugging Face router endpoints, so you can deploy without running Ollama.
 
-### 1) Create a free Hugging Face token
+For the full guide, see [DEPLOYMENT_GUIDE.md](DEPLOYMENT_GUIDE.md).
 
-- Sign in at Hugging Face
-- Create an access token
-- Keep it for deployment environment variable `HF_API_TOKEN`
+### 1) Create a Hugging Face token
 
-### 2) Deploy backend (free tier)
+- Create a token from Hugging Face settings.
+- Use `Read` role or a fine-grained token with Inference Providers permission.
+- Save it as `HF_API_TOKEN` for backend deployment.
 
-Use a free backend host like Render/Railway and set environment variables:
+### 2) Deploy backend on Render
+
+Use these backend environment variables:
 
 - `LLM_PROVIDER=huggingface`
 - `HF_API_TOKEN=<your_token>`
 - `HF_MODEL=google/flan-t5-base`
 - `HF_API_BASE=https://router.huggingface.co/hf-inference` (optional)
-- `HF_FALLBACK_MODEL=openai/gpt-oss-120b:fastest` (optional, used when HF_MODEL returns 404)
+- `HF_FALLBACK_MODEL=openai/gpt-oss-120b:fastest` (optional; used if `HF_MODEL` returns 404/410)
 
-### 3) Deploy frontend (free tier)
+Start command:
 
-Deploy `frontend` on Vercel/Netlify and set:
+```bash
+uvicorn main:app --host 0.0.0.0 --port $PORT
+```
 
-- `VITE_API_BASE_URL=https://<your-backend-domain>/api/v1`
+### 3) Deploy frontend on Vercel
 
-### 4) Upload resume and chat
+Set frontend environment variable:
 
-After deploy:
+- `VITE_API_BASE_URL=https://<your-render-backend>.onrender.com/api/v1`
 
-- Upload `.txt` resume from UI
-- Connect using the same vector database name
-- Start querying
+Important: Vite environment variables are baked at build time, so redeploy after changing them.
+
+### 4) Validate end-to-end
+
+- Open the frontend URL.
+- Enter a vector name (for example: `test-resume`).
+- Upload a `.txt` resume.
+- Ask a question based on uploaded content.
+
+### 5) Troubleshooting quick notes
+
+- `Hugging Face API error 410`: old endpoint was used somewhere. Use router base via `HF_API_BASE`.
+- `Hugging Face API error 404`: selected `HF_MODEL` is unavailable on current route/provider. Keep `HF_FALLBACK_MODEL` set.
+- Frontend `Connection failed`: verify `VITE_API_BASE_URL` and redeploy frontend.
 
 ## Docker Deployment
 
