@@ -58,6 +58,8 @@ Use these backend environment variables:
 - `HF_MODEL=google/flan-t5-base`
 - `HF_API_BASE=https://router.huggingface.co/hf-inference` (optional)
 - `HF_FALLBACK_MODEL=openai/gpt-oss-120b:fastest` (optional; used if `HF_MODEL` returns 404/410)
+- `CORS_ALLOW_ORIGINS=https://ragbased-chatbot.vercel.app,http://localhost:5173` (recommended for production)
+- `CORS_ALLOW_ORIGIN_REGEX=^https://.*\.vercel\.app$` (optional, for Vercel preview URLs)
 
 Start command:
 

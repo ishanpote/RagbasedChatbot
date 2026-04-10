@@ -43,6 +43,8 @@ Click "Advanced" > "Add Environment Variable":
 3. Key: `HF_MODEL` → Value: `google/flan-t5-base`
 4. (Optional) Key: `HF_API_BASE` → Value: `https://router.huggingface.co/hf-inference`
 5. (Optional) Key: `HF_FALLBACK_MODEL` → Value: `openai/gpt-oss-120b:fastest`
+6. (Recommended) Key: `CORS_ALLOW_ORIGINS` → Value: `https://ragbased-chatbot.vercel.app,http://localhost:5173`
+7. (Optional) Key: `CORS_ALLOW_ORIGIN_REGEX` → Value: `^https://.*\.vercel\.app$`
 
 ### 2.4) Deploy
 
