@@ -54,6 +54,7 @@ Use a free backend host like Render/Railway and set environment variables:
 - `LLM_PROVIDER=huggingface`
 - `HF_API_TOKEN=<your_token>`
 - `HF_MODEL=google/flan-t5-base`
+- `HF_API_BASE=https://router.huggingface.co/hf-inference` (optional)
 
 ### 3) Deploy frontend (free tier)
 

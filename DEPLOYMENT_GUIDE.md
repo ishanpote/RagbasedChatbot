@@ -8,7 +8,7 @@ Follow this step-by-step to deploy your chatbot for free.
 2. Click your profile > Settings > Access Tokens
 3. Click "New token"
 4. Name: `chatbot-api`
-5. Role: Read
+5. Role: Read (or fine-grained token with Inference Providers permission)
 6. Copy the token and save it somewhere safe
 7. You'll use this as `HF_API_TOKEN` in deployment
 
@@ -41,6 +41,7 @@ Click "Advanced" > "Add Environment Variable":
 1. Key: `LLM_PROVIDER` → Value: `huggingface`
 2. Key: `HF_API_TOKEN` → Value: `<paste your token from Step 1>`
 3. Key: `HF_MODEL` → Value: `google/flan-t5-base`
+4. (Optional) Key: `HF_API_BASE` → Value: `https://router.huggingface.co/hf-inference`
 
 ### 2.4) Deploy
 

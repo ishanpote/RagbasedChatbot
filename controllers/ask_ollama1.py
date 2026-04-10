@@ -69,7 +69,8 @@ def _chat_with_huggingface(system_prompt: str, message: str) -> str:
         )
 
     model = os.getenv("HF_MODEL", "google/flan-t5-base").strip()
-    endpoint = f"https://api-inference.huggingface.co/models/{model}"
+    hf_base_url = os.getenv("HF_API_BASE", "https://router.huggingface.co/hf-inference").strip().rstrip("/")
+    endpoint = f"{hf_base_url}/models/{model}"
 
     prompt = f"{system_prompt}\n\nUser question: {message}\nAssistant answer:"
     payload = {
